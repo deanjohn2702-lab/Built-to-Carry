@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Built to Carry — John A Dean</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #1a1208; --cream: #f5f0e8; --gold: #b8860b;
+      --gold-light: #d4a017; --warm-mid: #3d2f1a; --paper: #ede8dc;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--ink); font-family: 'Lato', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(245,240,232,0.93); backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(184,134,11,0.2);
+    }
+    .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 900; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; }
+    .nav-brand span { color: var(--gold); }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a { text-decoration: none; color: var(--warm-mid); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; transition: color 0.25s; }
+    nav ul a:hover { color: var(--gold); }
+
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 80px; }
+    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 6rem 4rem 6rem 6rem; position: relative; }
+    .hero-left::after { content: ''; position: absolute; right: 0; top: 15%; bottom: 15%; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); }
+    .hero-tag { font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; font-weight: 700; }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 5vw, 5.2rem); font-weight: 900; line-height: 1.05; color: var(--ink); margin-bottom: 1rem; }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-question { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.08rem; color: var(--warm-mid); line-height: 1.6; margin-bottom: 1.5rem; border-left: 3px solid var(--gold); padding-left: 1.2rem; }
+    .hero-sub { font-size: 1rem; line-height: 1.85; color: var(--warm-mid); max-width: 460px; margin-bottom: 2.5rem; }
+    .btn-primary { display: inline-block; background: var(--gold); color: var(--cream); padding: 1rem 2.2rem; font-size: 0.82rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; text-decoration: none; transition: background 0.25s, transform 0.2s; border: none; cursor: pointer; }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline { display: inline-block; border: 1.5px solid var(--gold); color: var(--gold); padding: 1rem 2.2rem; font-size: 0.82rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; text-decoration: none; margin-left: 1rem; transition: background 0.25s, color 0.25s, transform 0.2s; }
+    .btn-outline:hover { background: var(--gold); color: var(--cream); transform: translateY(-2px); }
+
+    .hero-right { display: flex; align-items: center; justify-content: center; padding: 6rem 5rem 6rem 4rem; background: var(--paper); position: relative; overflow: hidden; }
+    .hero-right::before { content: 'BUILT\ATO\ACARRY'; white-space: pre; position: absolute; font-family: 'Playfair Display', serif; font-size: 9rem; font-weight: 900; color: rgba(184,134,11,0.055); line-height: 1; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+    .book-mockup { width: 210px; background: var(--ink); aspect-ratio: 2/3; display: flex; flex-direction: column; justify-content: space-between; padding: 2rem 1.5rem; box-shadow: 12px 20px 50px rgba(26,18,8,0.35), -4px 0 0 rgba(184,134,11,0.5); position: relative; z-index: 2; animation: bookFloat 5s ease-in-out infinite; }
+    @keyframes bookFloat { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-12px) rotate(0.5deg); } }
+    .bk-top { border-top: 2px solid var(--gold); padding-top: 1rem; }
+    .bk-top-text { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+    .bk-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: var(--cream); line-height: 1.1; margin-top: 1rem; }
+    .bk-title em { color: var(--gold); font-style: italic; }
+    .bk-author { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,232,0.5); border-top: 1px solid rgba(184,134,11,0.3); padding-top: 0.75rem; }
+
+    section { padding: 6rem 6rem; }
+    .section-label { font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+    .section-label::after { content: ''; flex: 0 0 40px; height: 1px; background: var(--gold); }
+    h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 3vw, 2.8rem); font-weight: 900; color: var(--ink); line-height: 1.15; margin-bottom: 1.5rem; }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .about-text p { font-size: 1.02rem; line-height: 1.9; color: var(--warm-mid); margin-bottom: 1.2rem; }
+    .spine-quote { background: var(--ink); color: var(--cream); padding: 2.5rem; margin-top: 1.5rem; border-left: 4px solid var(--gold); }
+    .spine-quote blockquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.12rem; line-height: 1.7; color: var(--cream); }
+    .spine-quote cite { display: block; margin-top: 1rem; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-style: normal; }
+    .three-parts { display: flex; flex-direction: column; gap: 1.2rem; }
+    .part-card { background: var(--paper); padding: 1.5rem 1.8rem; border-left: 3px solid var(--gold); transition: transform 0.2s; }
+    .part-card:hover { transform: translateX(5px); }
+    .part-number { font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 0.3rem; }
+    .part-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--ink); margin-bottom: 0.4rem; }
+    .part-card p { font-size: 0.88rem; color: var(--warm-mid); line-height: 1.65; }
+
+    #book { background: var(--paper); }
+    .book-section-inner { display: grid; grid-template-columns: auto 1fr; gap: 5rem; align-items: start; }
+    .book-cover-sm { width: 190px; background: var(--ink); aspect-ratio: 2/3; display: flex; flex-direction: column; justify-content: space-between; padding: 1.8rem 1.4rem; box-shadow: 8px 16px 40px rgba(26,18,8,0.3), -3px 0 0 rgba(184,134,11,0.4); flex-shrink: 0; }
+    .book-cover-sm .t { font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 0.8rem; }
+    .book-cover-sm .m { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 900; color: var(--cream); line-height: 1.1; margin-top: 0.8rem; }
+    .book-cover-sm .m em { color: var(--gold); font-style: italic; }
+    .book-cover-sm .a { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,232,0.5); border-top: 1px solid rgba(184,134,11,0.3); padding-top: 0.6rem; }
+    .book-details p { font-size: 1.02rem; line-height: 1.9; color: var(--warm-mid); margin-bottom: 1.2rem; }
+    .kdp-note { display: inline-block; background: rgba(184,134,11,0.1); border: 1px solid rgba(184,134,11,0.3); color: var(--gold); font-size: 0.78rem; letter-spacing: 0.1em; padding: 0.5rem 1.1rem; margin-bottom: 1.5rem; font-weight: 700; }
+    .buy-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    #articles { background: var(--cream); }
+    .articles-intro { max-width: 620px; margin-bottom: 3rem; }
+    .articles-intro p { font-size: 1.02rem; line-height: 1.9; color: var(--warm-mid); }
+    .articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .article-card { background: var(--paper); padding: 2rem; border-top: 3px solid var(--gold); transition: transform 0.25s, box-shadow 0.25s; }
+    .article-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(26,18,8,0.1); }
+    .article-tag { font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 0.8rem; }
+    .article-card h3 { font-family: 'Playfair Display', serif; font-size: 1.08rem; color: var(--ink); line-height: 1.35; margin-bottom: 0.8rem; }
+    .article-card p { font-size: 0.88rem; color: var(--warm-mid); line-height: 1.7; }
+    .article-read { display: inline-block; margin-top: 1.2rem; font-size: 0.73rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 700; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+    .article-read:hover { border-color: var(--gold); }
+    .add-article-tip { margin-top: 2.5rem; background: var(--paper); padding: 2rem 2.5rem; border-top: 3px solid var(--gold); }
+    .add-article-tip p { font-size: 0.9rem; color: var(--warm-mid); line-height: 1.8; }
+    .add-article-tip strong { font-family: 'Playfair Display', serif; color: var(--ink); font-size: 1rem; }
+
+    #contact { background: var(--ink); }
+    #contact .section-label { color: var(--gold-light); }
+    #contact .section-label::after { background: var(--gold-light); }
+    #contact h2 { color: var(--cream); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .contact-text p { font-size: 1.02rem; line-height: 1.9; color: rgba(245,240,232,0.65); margin-bottom: 1rem; }
+    .contact-links { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .contact-link { display: flex; align-items: center; gap: 0.7rem; color: var(--gold); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .contact-link:hover { color: var(--gold-light); }
+    .free-email-note { background: rgba(184,134,11,0.08); border: 1px solid rgba(184,134,11,0.22); padding: 1.2rem 1.5rem; margin-top: 1.8rem; font-size: 0.86rem; color: rgba(245,240,232,0.65); line-height: 1.75; }
+    .free-email-note strong { color: var(--gold); display: block; margin-bottom: 0.4rem; }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-form input, .contact-form textarea { background: rgba(245,240,232,0.06); border: 1px solid rgba(184,134,11,0.3); color: var(--cream); padding: 0.9rem 1.2rem; font-family: 'Lato', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s; width: 100%; }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: var(--gold); }
+    .contact-form textarea { resize: vertical; min-height: 130px; }
+    .contact-form input::placeholder, .contact-form textarea::placeholder { color: rgba(245,240,232,0.3); }
+
+    footer { background: #0e0b05; color: rgba(245,240,232,0.35); text-align: center; padding: 2rem; font-size: 0.78rem; letter-spacing: 0.08em; }
+    footer span { color: var(--gold); }
+
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1rem; }
+      nav ul a { font-size: 0.72rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 5rem 1.8rem 3rem; }
+      .hero-left::after { display: none; }
+      .hero-right { padding: 3rem 2rem 4rem; }
+      section { padding: 4rem 1.8rem; }
+      .about-grid, .book-section-inner, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .btn-outline { margin-left: 0; margin-top: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="#"><span>Built</span> to Carry</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#book">The Book</a></li>
+      <li><a href="#articles">Articles</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <p class="hero-tag">John A Dean · Management Consulting</p>
+      <h1 class="hero-title">Built<br/>to <em>Carry</em></h1>
+      <p class="hero-question">"Is your organisation designed to carry what you are asking it to carry?"</p>
+      <p class="hero-sub">Most organisations don't fail because their people stop trying. They fail because the system was never designed to carry what it was being asked to carry.</p>
+      <div>
+        <a href="#book" class="btn-primary">Get the Book</a>
+        <a href="#articles" class="btn-outline">Read Articles</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="book-mockup">
+        <div class="bk-top"><div class="bk-top-text">John A Dean</div></div>
+        <div class="bk-title">Built<br/>to <em>Carry</em></div>
+        <div class="bk-author">John A Dean</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid fade-in">
+      <div class="about-text">
+        <div class="section-label">About the Book</div>
+        <h2>This is not a book about effort.<br/>It is a book about design.</h2>
+        <p>Built to Carry exposes the gap between how organisations appear to work and how they actually do. It names the performance illusion — the way organisations seem to function long after they have become structurally weak, held together by people quietly compensating for a system that can no longer carry its own load.</p>
+        <p>John A Dean has spent four decades working in operational and manufacturing environments, from the shop floor to senior leadership. His work focuses on the structural conditions that quietly determine whether performance is earned or borrowed.</p>
+        <div class="spine-quote">
+          <blockquote>"If people stopped compensating tomorrow, would the system still function?"</blockquote>
+          <cite>— The organising question of Built to Carry</cite>
+        </div>
+      </div>
+      <div>
+        <div class="three-parts">
+          <div class="part-card">
+            <div class="part-number">Part One</div>
+            <h4>The Illusion</h4>
+            <p>See what is actually happening in your organisation. Not what the dashboard reports — what the work actually requires, and what it is costing you.</p>
+          </div>
+          <div class="part-card">
+            <div class="part-number">Part Two</div>
+            <h4>The Condition</h4>
+            <p>Understand the structural condition beneath what you see. Where has the load shifted from design to people — why it happened, and why it continues.</p>
+          </div>
+          <div class="part-card">
+            <div class="part-number">Part Three</div>
+            <h4>The Action</h4>
+            <p>Do something about it. Precisely. Patiently. One thing at a time — until the structure carries the weight it was designed to carry.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK -->
+  <section id="book">
+    <div class="book-section-inner fade-in">
+      <div class="book-cover-sm">
+        <div><div class="t">John A Dean</div></div>
+        <div class="m">Built<br/>to <em>Carry</em></div>
+        <div class="a">Management Consulting</div>
+      </div>
+      <div class="book-details">
+        <div class="section-label">The Book</div>
+        <h2>A structural diagnosis for every organisation under pressure</h2>
+        <div class="kdp-note">📖 Available on Amazon KDP</div>
+        <p>Built to Carry is a short book — deliberately so. It does not pad the argument. There is one central idea and everything in its pages serves it: most organisations do not perform because they are well designed — they perform because people are quietly compensating for structural failure.</p>
+        <p>Written from four decades of operational and manufacturing experience, this is a book for leaders who are ready to look honestly at the gap between declared design and operational reality — and do something about it, precisely and patiently, one thing at a time.</p>
+        <div class="buy-buttons">
+          <!-- REPLACE these links with your live Amazon KDP URLs once the book is published -->
+          <a href="YOUR_AMAZON_LINK_HERE" class="btn-primary" target="_blank">Buy on Amazon</a>
+          <a href="YOUR_KINDLE_LINK_HERE" class="btn-outline" target="_blank">Kindle Edition</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLES -->
+  <section id="articles">
+    <div class="section-label fade-in">Articles</div>
+    <div class="articles-intro fade-in">
+      <h2>Straight thinking on organisations and performance</h2>
+      <p>Short, sharp articles drawn from Built to Carry and four decades of operational experience. Written to be shared on LinkedIn and social media.</p>
+    </div>
+    <div class="articles-grid">
+      <div class="article-card fade-in">
+        <div class="article-tag">Performance</div>
+        <h3>The Performance Illusion: Why Your Organisation Looks Healthier Than It Is</h3>
+        <p>Orders ship. Dashboards glow green. But look closer — the work is being carried by people, not the system. That is not performance. That is borrowed time.</p>
+        <a href="#" class="article-read">Read Article →</a>
+      </div>
+      <div class="article-card fade-in">
+        <div class="article-tag">Leadership</div>
+        <h3>Effort Is a Poor Proxy for Performance</h3>
+        <p>In many organisations, effort increases precisely because the system is failing. The harder people work, the more it masks the underlying design problems.</p>
+        <a href="#" class="article-read">Read Article →</a>
+      </div>
+      <div class="article-card fade-in">
+        <div class="article-tag">Structure</div>
+        <h3>What Your Exceptions Are Actually Telling You</h3>
+        <p>Alongside every outcome, record every workaround needed to achieve it. Stack that against your green dashboard and the illusion collapses immediately.</p>
+        <a href="#" class="article-read">Read Article →</a>
+      </div>
+    </div>
+    <div class="add-article-tip fade-in">
+      <p><strong>To add your own articles:</strong> Copy one of the article cards above in the HTML file, paste it inside the articles-grid div, and replace the title and text. Each article card is ready to screenshot and share on LinkedIn.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-grid">
+      <div class="contact-text">
+        <div class="section-label">Contact</div>
+        <h2>Let's talk about what your organisation is carrying</h2>
+        <p style="margin-top:1rem;">Whether it's a question about the book, a consulting conversation, or a speaking enquiry — get in touch. Every message is read personally by John.</p>
+        <div class="contact-links">
+          <a href="mailto:YOUR_GMAIL@gmail.com" class="contact-link">
+            <!-- Replace YOUR_GMAIL with your actual Gmail address -->
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+            YOUR_GMAIL@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/johndean197/" target="_blank" class="contact-link">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M8 11v5M8 8v.01M12 16v-5M12 13a2 2 0 0 1 4 0v3"/></svg>
+            linkedin.com/in/johndean197
+          </a>
+          <a href="https://www.processpathwaystrategies.com" target="_blank" class="contact-link">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+            processpathwaystrategies.com
+          </a>
+        </div>
+        <div class="free-email-note">
+          <strong>💡 Free professional email options:</strong>
+          You can use your Gmail address for now — it works perfectly. When you're ready to upgrade, <strong style="color:var(--gold)">Zoho Mail</strong> offers a free business email (e.g. john@builttocarry.com) as long as you own a domain name. Domain names cost around £10/year from GoDaddy or Namecheap.
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <input type="text" placeholder="Your name" required />
+        <input type="email" placeholder="Your email" required />
+        <input type="text" placeholder="Subject — e.g. Consulting enquiry" />
+        <textarea placeholder="Your message"></textarea>
+        <button type="submit" class="btn-primary" style="align-self:flex-start;">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 <span>Built to Carry</span> &middot; John A Dean &middot; All rights reserved
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const inputs = e.target.querySelectorAll('input[type=text]');
+      const name = inputs[0]?.value || '';
+      const email = e.target.querySelector('input[type=email]').value;
+      const subject = inputs[1]?.value || 'Website enquiry — Built to Carry';
+      const msg = e.target.querySelector('textarea').value;
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&su=${encodeURIComponent(subject)}&body=${encodeURIComponent('From: ' + name + ' (' + email + ')\n\n' + msg)}`;
+      window.open(gmailUrl, '_blank');
+      const btn = e.target.querySelector('button');
+      btn.textContent = '✓ Opening Gmail...';
+      btn.style.background = '#4a7c5f';
+      setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; e.target.reset(); }, 3000);
+    }
+  </script>
+</body>
+</html>
